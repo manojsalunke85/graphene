@@ -5,17 +5,11 @@ pipeline {
               }
         }
         stages {
-                stage('Lint') {
-                    steps {
-                        sh '''
-                            ./.ci/run-shellcheck
-                        '''
-                    }
-                }
+                load 'lib/stage-lint.jenkinsfile'
+                load 'lib/stage-clean-check-prepare.jenkinsfile'
                 stage('Build') {
                     steps {
                         sh '''
-                            ./Scripts/clean-check-prepare
                             cd LibOS
                             make -j8 glibc-build/Build.success GLIBC_VERSION=2.23
                             rm -r glibc-build

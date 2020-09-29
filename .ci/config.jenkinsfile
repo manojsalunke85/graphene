@@ -1,0 +1,18 @@
+parameters {
+    string(name: 'NPROCESSORS', defaultValue: '8', description: 'parameter for make -j')
+}
+
+environment {
+    ISGX_DRIVER_PATH = '/opt/intel/linux-sgx-driver'
+    GLIBC_VERSION = '2.31'
+    WERROR = '1'
+    MAKEOPTS = "-j${params.NPROCESSORS}"
+}
+
+def DOCKER_ARGS = '''
+    --volume=/lib/modules:/lib/modules:ro
+    --volume=/usr/src:/usr/src:ro
+    --volume=/var/run/aesmd/aesm.socket:/var/run/aesmd/aesm.socket
+    --device=/dev/gsgx:/dev/gsgx
+    --device=/dev/isgx:/dev/isgx
+'''

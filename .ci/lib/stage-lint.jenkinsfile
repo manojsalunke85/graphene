@@ -1,0 +1,20 @@
+stage('lint') {
+    stages {
+        stage('lint-pylint') {
+            when { environment name: 'DISTRO', value: 'ubuntu18.04' }
+            steps {
+                sh '''
+                    ./.ci/run-pylint -f text || :
+                    ./.ci/run-pylint -f json | ./.ci/prfilter
+                '''
+            }
+        }
+        stage('lint-shellcheck') {
+            steps {
+                sh '''
+                    ./.ci/run-shellcheck
+                '''
+            }
+        }
+    }
+}

@@ -5,17 +5,11 @@ pipeline {
               }
         }
         stages {
-                stage('Lint') {
-                    steps {
-                        sh '''
-                            ./.ci/run-shellcheck
-                        '''
-                    }
-                }
+                load 'lib/stage-lint.jenkinsfile'
+                load 'lib/stage-clean-check-prepare.jenkinsfile'
                 stage('Build') {
                     steps {
                         sh '''
-                            ./Scripts/clean-check-prepare
                             make -j8 DEBUG=1 WERROR=1 GLIBC_VERSION=2.27
                             make -j8 DEBUG=1 WERROR=1 GLIBC_VERSION=2.27 test
                            '''

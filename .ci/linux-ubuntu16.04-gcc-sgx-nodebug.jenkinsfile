@@ -6,18 +6,10 @@ pipeline {
                        }
         }
         stages {
-                stage('Lint') {
-                    steps {
-                        sh '''
-                            ./.ci/run-shellcheck
-                        '''
-                    }
-                }
+                load 'lib/stage-lint.jenkinsfile'
+                load 'lib/stage-clean-check-prepare.jenkinsfile'
                 stage('Build') {
                     steps {
-                        sh '''
-                           ./Scripts/clean-check-prepare
-                        '''
                         sh '''
                             cd Pal/src/host/Linux-SGX/signer/ && openssl genrsa -3 -out enclave-key.pem 3072
                         '''
