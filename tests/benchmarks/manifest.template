@@ -1,5 +1,6 @@
 #sgx.enable_stats = 1
 
+loader.exec = file:@LOADER_EXEC@
 loader.preload = file:@GRAPHENEDIR@/Runtime/libsysdb.so
 loader.env.LD_LIBRARY_PATH = /lib
 loader.debug_type = none
